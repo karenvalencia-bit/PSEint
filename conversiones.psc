@@ -3,7 +3,7 @@ Algoritmo conversiones
 	definir decimal, n, resp, base, residuo Como Entero;
 	Definir hexa, octal, binario, decimal2 Como Caracter;
 	definir resultado Como entero;
-	definir i, x Como Entero;
+	definir i, x, z Como Entero;
 	
 	
 	escribir "ingrese un numero entero";
@@ -38,7 +38,7 @@ Algoritmo conversiones
 				binario= ConvertirATexto(n);
 				n = Longitud(binario);
 				i=0;
-				residuo=0;
+				resultado=0;
 				Mientras n>0 Hacer
 					si Subcadena(binario,n,n) == "1" Entonces 
 						resultado = resultado + 2^x;
@@ -63,31 +63,12 @@ Algoritmo conversiones
 				
 			FinSi
 			
-//			si base == 4 Entonces //hexadecimal a decimal
-//				binario= ConvertirATexto(n)
-//				n = Longitud(binario)
-//				i=0
-//				resultado=0
-//				Mientras n>0 Hacer
-//					si Subcadena(binario,n,n) == "1" Entonces
-//						resultado = resultado + 2^x
-//					
-//						hexadecimal=ConvertirATexto(resultado)
-//						decimal2=Subcadena(hexadecimal,0,0)
-//						
-//						Escribir decimal2
-//						
-//					FinSi
-//					
-//					n=n-1
-//					x = x+1
-//					
-//					
-//					
-//				FinMientras
-//				
-//			FinSi
-//			
+			si base == 4 Entonces //hexadecimal a decimal
+				
+				
+				
+			FinSi
+			
 			
 		(2):
 			Escribir "estas cambiando a binario";
@@ -104,7 +85,7 @@ Algoritmo conversiones
 			FinSi
 			
 			si base ==2 Entonces
-				escribir "estas cambiando a la misma base inicial, por lo cual es numero es el mismo", n;
+				escribir "estas cambiando a la misma base inicial, por lo cual el numero es el mismo", n;
 			FinSi
 			
 			si base == 3 Entonces //octal a binario
@@ -140,7 +121,8 @@ Algoritmo conversiones
 		(3):
 			Escribir "estas cambiando a octal";
 		si base == 1 Entonces //decimal a octal
-				x=1;
+			
+			x=1;
 				Mientras x>0 Hacer
 					x=trunc(n/8);
 					octal=ConvertirATexto(n mod 8)+octal;
@@ -151,27 +133,46 @@ Algoritmo conversiones
 		
 		FinSi
 		
+		
 		si base == 2 Entonces //binario a octal
-			x=1;
-			Mientras x>0 Hacer
-				x=trunc(n/8);
-				octal=ConvertirATexto(n mod 8)+octal;
-				n=x;
+			binario=ConvertirATexto(n);
+			n=Longitud(binario);
+			x=0;
+			decimal=0;
+			Mientras n>0 Hacer
+				si Subcadena(binario,n,n)=="1" Entonces
+					resultado=resultado + 2^x;
+				FinSi
+				
+				n =n-1;
+				x=x+1;
 			FinMientras
 			
-			Escribir "el numero octal en decimal es ", octal;
 			
+			octal="";
+			Mientras resultado>0 Hacer
+				residuo=trunc(resultado/8);
+				octal=ConvertirATexto(resultado mod 8)+octal;
+				resultado=residuo;
+			FinMientras
+			
+			Escribir "el numero binario a octal es: ", octal;
 		FinSi
 		
+		
 		si base == 3 Entonces
-			escribir "estas cambiando a la misma base inicial, por lo cual es numero es el mismo ",n;
+			escribir "estas cambiando a la misma base inicial, por lo cual el numero es el mismo ",n;
+		FinSi
+		
+		si base == 4 Entonces //hexadecimal a octal
+			
 		FinSi
 		
 	
 		De Otro Modo:
 			Escribir "estas cambiando a hexadecimal";
 			
-			si base == 1 Entonces
+			si base == 1 Entonces //decimal a hexadecimal
 				x=1;
 				
 				hexa="";
@@ -198,6 +199,92 @@ Algoritmo conversiones
 					n=x;
 				FinMientras
 				Escribir "el numero a hexa es ",hexa;
+			FinSi
+			
+			
+			si base== 2 Entonces //binario a hexadecimal
+				
+				binario=ConvertirATexto(n);
+				n=Longitud(binario);
+				x=0;
+				decimal=0;
+				Mientras n>0 Hacer
+					si Subcadena(binario,n,n)=="1" Entonces
+						resultado=resultado + 2^x;
+					FinSi
+					
+					n =n-1;
+					x=x+1;
+					
+				FinMientras
+				
+				hexa="";
+				
+				Mientras resultado>0 Hacer
+					residuo=trunc(resultado/16);
+					
+					Segun resultado mod 16 hacer
+						10:
+							hexa="A"+hexa;
+						11:
+							hexa="B"+hexa;
+						12:
+							hexa="C"+hexa;
+						13:
+							hexa="D"+hexa;
+						14:
+							hexa="E"+hexa;
+						15:
+							hexa="F"+hexa;
+						De Otro Modo:
+							hexa=ConvertirATexto(resultado mod 16)+hexa;
+					FinSegun
+					resultado=residuo;
+				FinMientras
+				Escribir "el numero binario a hexadecimal es: ",hexa;
+				
+			FinSi
+			
+			si base == 3 Entonces// octal a hexadecimal
+				c<-trunc(n/100);
+				d<-trunc((n%100)/10);
+				u<-trunc(n%10)%10;
+				
+				si c<8 y d<8 y u<8 Entonces
+					resultado=(c*(8^2) +(d*(8^1)) +(u*(8^0)));
+					Escribir "el numero octal a decimal es:",resultado;
+				FinSi
+				
+				
+				hexa="";
+				
+				Mientras resultado>0 Hacer
+					residuo=trunc(resultado/16);
+					
+					Segun resultado mod 16 hacer
+						10:
+							hexa="A"+hexa;
+						11:
+							hexa="B"+hexa;
+						12:
+							hexa="C"+hexa;
+						13:
+							hexa="D"+hexa;
+						14:
+							hexa="E"+hexa;
+						15:
+							hexa="F"+hexa;
+						De Otro Modo:
+							hexa=ConvertirATexto(resultado mod 16)+hexa;
+					FinSegun
+					resultado=residuo;
+				FinMientras
+				Escribir "el numero octal a hexadecimal es: ",hexa;
+			
+			FinSi
+			
+			si base == 4 Entonces// hexadecimal a hexadecimal
+				escribir "estas cambiando a la misma base inicial, por lo cual el numero es el mismo ",n;
 			FinSi
 	Fin Segun
 FinAlgoritmo
