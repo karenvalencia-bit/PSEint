@@ -2,8 +2,9 @@ Algoritmo ejercicio_1_V
 	//1. Lea las coordenadas de dos puntos y que muestre la distancias entre los
 	//dos puntos.
 	
-	definir i, Z,distancia, punto1, punto2 Como Entero;
-	Definir resp Como Caracter;
+	definir distancia, punto1, punto2 Como real;
+	Definir i, Z Como Entero;
+	Definir resp1 Como Caracter;
 	Dimension coordenadas1[2];
 	Dimension coordenadas2[2] ; 
 	i=0;
@@ -12,7 +13,7 @@ Algoritmo ejercicio_1_V
 		Z=Z+1;
 		
 		Escribir "----------------Este algoritmo muestra la distancia entre dos puntos----------------";
-		Escribir "-------------El algoritmo solo permite la entrada de numeros enteros para calcular la distancia------------";
+		
 		Escribir "";
 		para i=1 hasta 2 Con Paso 1 Hacer
 			Escribir "----------------digite la coordeanda del punto 1, primero el numero que corresponda a X1 y luego el numero que corresponda a Y1---------------- ";
@@ -44,9 +45,9 @@ Algoritmo ejercicio_1_V
 		
 		Escribir "----------------¿Quiere continuar calculando mas distancias entres puntos?----------------";
 		Escribir "----------------Digite S mayuscula para si o Digite N para no----------------";
-		leer resp;
+		leer resp1;
 		
-	Hasta Que resp <> S
+	Hasta Que resp1 <> "S"
 	
 	Escribir "has terminado de realizar tus calculos o NO has ingresado la respuesta indicada";
 	
